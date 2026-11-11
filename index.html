@@ -8,11 +8,10 @@
   Optional files (same folder as index.html):
     photo.jpg  -> a portrait; it appears in the About section.
                   If it's missing, the slot simply disappears.
-    cv.pdf     -> the CV; a "Download CV" button appears in the
-                  header once this file exists on the live site, and the
-                  CV section links to it. cv-preview.jpg is its thumbnail.
-                  /cv and /resume also open it (see cv/, resume/ and
-                  _redirects).
+    cv.pdf     -> the CV as a PDF (the "Download PDF" button).
+    cv/        -> the CV as a web page; the "View CV" buttons open it,
+                  and /resume redirects there. Keep it in step with cv.pdf.
+                  cv-preview.jpg is the thumbnail in the CV section.
 
   To add another certification later, search this file for CERTIFICATE.
 -->
@@ -466,7 +465,7 @@
     <div class="actions">
       <a class="btn btn-solid" href="mailto:rehabikhlaq@gmail.com">Email me</a>
       <a class="btn btn-line" href="https://www.linkedin.com/in/rehab-ikhlaq-9801ba28a" target="_blank" rel="noopener">View LinkedIn</a>
-      <a class="btn btn-line" id="cv-link" href="cv.pdf" download="Rehab_Ikhlaq_CV.pdf" hidden>Download CV</a>
+      <a class="btn btn-line" href="cv/">View CV</a>
     </div>
   </div>
 </header>
@@ -520,6 +519,13 @@
             <li>Developed professional conduct with patients and healthcare staff</li>
           </ul>
           <p class="cert">Internship completed, with certificate</p>
+        </li>
+
+        <li>
+          <p class="when">September 2026</p>
+          <h3>Workshop on Behavior Disorders in Children</h3>
+          <p class="where">Department of Pediatrics, Quaid-e-Azam International Hospital</p>
+          <p>Pre-conference workshop of the Pakistan Pediatric Association Biennial Conference.</p>
         </li>
 
         <!-- CERTIFICATE: to add another certification, delete this comment line and the one at the end, then fill in the details.
@@ -590,13 +596,13 @@
       <h2 id="cv-title">CV</h2>
 
       <div class="cv-block">
-        <a class="cv-thumb" href="cv.pdf" target="_blank" rel="noopener" aria-label="Open the CV (PDF, opens in a new tab)">
+        <a class="cv-thumb" href="cv/" aria-label="View the CV">
           <img src="cv-preview.jpg" alt="Preview of Rehab Ikhlaq's one-page CV" width="900" height="1274" loading="lazy">
         </a>
         <div>
           <p class="cv-lead">My education, clinical experience, research and skills on a single page.</p>
           <div class="actions">
-            <a class="btn btn-spruce" href="cv.pdf" target="_blank" rel="noopener">View CV</a>
+            <a class="btn btn-spruce" href="cv/">View CV</a>
             <a class="btn btn-outline" href="cv.pdf" download="Rehab_Ikhlaq_CV.pdf">Download PDF</a>
           </div>
           <p class="cv-meta">One page, A4 PDF</p>
@@ -652,17 +658,6 @@
     }
   })();
 
-  // Show "Download CV" only when cv.pdf exists next to this page.
-  (function () {
-    var link = document.getElementById('cv-link');
-    if (!link || location.protocol.indexOf('http') !== 0) return;
-    fetch(link.getAttribute('href'), { method: 'HEAD' })
-      .then(function (r) {
-        var type = r.headers.get('content-type') || '';
-        if (r.ok && type.indexOf('pdf') !== -1) link.hidden = false;
-      })
-      .catch(function () {});
-  })();
 </script>
 </body>
 </html>
