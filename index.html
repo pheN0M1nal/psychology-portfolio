@@ -9,7 +9,10 @@
     photo.jpg  -> a portrait; it appears in the About section.
                   If it's missing, the slot simply disappears.
     cv.pdf     -> the CV; a "Download CV" button appears in the
-                  header once this file exists on the live site.
+                  header once this file exists on the live site, and the
+                  CV section links to it. cv-preview.jpg is its thumbnail.
+                  /cv and /resume also open it (see cv/, resume/ and
+                  _redirects).
 
   To add another certification later, search this file for CERTIFICATE.
 -->
@@ -345,6 +348,40 @@
   .languages p { margin: 0; }
   .languages span { color: var(--muted); }
 
+  /* CV */
+  .cv-block {
+    display: grid;
+    grid-template-columns: minmax(0, 15rem) 1fr;
+    gap: 2rem 3rem;
+    align-items: center;
+  }
+  .cv-thumb {
+    display: block;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: .5rem;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(30, 43, 42, .06), 0 18px 36px -18px rgba(30, 43, 42, .35);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .cv-thumb:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 1px 2px rgba(30, 43, 42, .06), 0 24px 40px -18px rgba(30, 43, 42, .4);
+  }
+  .cv-thumb img { width: 100%; aspect-ratio: 900 / 1274; }
+  .cv-lead {
+    max-width: 30rem;
+    margin-bottom: 1.75rem;
+    font-family: var(--serif);
+    font-size: clamp(1.3rem, 2.3vw, 1.6rem);
+    line-height: 1.4;
+  }
+  .btn-spruce { background: var(--spruce); color: var(--snow); }
+  .btn-spruce:hover { background: var(--spruce-deep); }
+  .btn-outline { border-color: var(--spruce); color: var(--spruce); }
+  .btn-outline:hover { background: rgba(35, 70, 63, .07); }
+  .cv-meta { margin: 1.1rem 0 0; font-size: 1rem; color: var(--muted); }
+
   /* ---------- Contact ---------- */
   .contact {
     background: var(--spruce-deep);
@@ -390,6 +427,9 @@
     .hero { min-height: auto; }
     .hero-body { padding-block: 4.5rem 4.75rem; }
     .btn { flex: 1 1 auto; }
+    .nav-cv { display: none; }   /* the hero's Download CV button covers it on phones */
+    .cv-block { grid-template-columns: 1fr; }
+    .cv-thumb { max-width: 13rem; }
   }
   @media (max-width: 380px) {
     .nav ul li:nth-child(2) { display: none; }
@@ -398,7 +438,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .contours path { animation: none; stroke-dashoffset: 0; }
-    .btn, .email { transition: none; }
+    .btn, .email, .cv-thumb { transition: none; }
   }
 </style>
 </head>
@@ -414,6 +454,7 @@
       <li><a href="#about">About</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#research">Research</a></li>
+      <li class="nav-cv"><a href="#cv">CV</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -539,6 +580,26 @@
           <h3>Languages</h3>
           <p>English <span>(fluent)</span></p>
           <p>Urdu <span>(native)</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cv" aria-labelledby="cv-title">
+    <div class="wrap grid">
+      <h2 id="cv-title">CV</h2>
+
+      <div class="cv-block">
+        <a class="cv-thumb" href="cv.pdf" target="_blank" rel="noopener" aria-label="Open the CV (PDF, opens in a new tab)">
+          <img src="cv-preview.jpg" alt="Preview of Rehab Ikhlaq's one-page CV" width="900" height="1274" loading="lazy">
+        </a>
+        <div>
+          <p class="cv-lead">My education, clinical experience, research and skills on a single page.</p>
+          <div class="actions">
+            <a class="btn btn-spruce" href="cv.pdf" target="_blank" rel="noopener">View CV</a>
+            <a class="btn btn-outline" href="cv.pdf" download="Rehab_Ikhlaq_CV.pdf">Download PDF</a>
+          </div>
+          <p class="cv-meta">One page, A4 PDF</p>
         </div>
       </div>
     </div>
